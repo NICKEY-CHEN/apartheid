@@ -1,0 +1,23 @@
+# To calculate the t-scores for top collocates with the term "apartheid", I took the first part from collocates script. 
+# This script puts each word on a separate line so I could calculate the number of specific words in each text
+
+# Script for oige_sonestaja.sh 
+
+grep -v '<.*>' \
+| sed 's/\([^A-Z][.!?]\) \([A-Z0-9]\)/\1\n\2/g' \
+| sed 's/\([.!?]\) \([“]\)/\1\n\2/g' \
+| tr '[A-Z]' '[a-z]' \
+| sed 's/$/#/' \
+| tr -d '\.\,\?\!\:\"\“\”\(\)\;' \
+| tr ' ' '\n' \
+| grep -v '^$' \
+
+# I first calculated all the words in the text 
+
+cat ALL.txt |./oige_sonestaja.sh | wc -w
+# Result 2 102 790 words
+
+
+# To calculate marginal word appearances
+
+cat ALL.txt |./oige_sonestaja.sh | grep "israel" | wc -w
