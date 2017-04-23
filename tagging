@@ -1,0 +1,13 @@
+# I used Unix terminal window in Bitvise to tag the corpora.   
+# I downloaded the program Tree Tagger to tag the corpora. The TreeTagger is downloadable from http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/
+for annotating text with part-of-speech and lemma information.
+
+# I deleted the punctuation, tagged as "SENT".  
+
+cat ALL.txt | cmd/tree-tagger-english > ALL_margendatud_oige.txt
+
+# I marked tabs with #, so I can later delete them.
+# I then deleted the first, original word form.
+# I sorted the results by numeric appearance.
+
+cat ALL_margendatud_oige.txt | tr '\t' '#' | sed 's/^[a-z]*[^#]*//g' | sort | uniq -c | sort -nr | less
