@@ -10,7 +10,7 @@
 # Replace all verb types with tag #VB# and all other word types with #NN#. 
 # Delete (tr -d/grep -v) unwanted symbols (�,@,POS,: etc).
 # Delete original token before first # (sed 's/^[a-z]*[^#]*//g') and leave only lemmas for analysis.
-# Take into analysis only lines with tags (grep '[A-Z]').
+# Take into analysis only lines with capital letter tags (grep '[A-Z]').
 # Delete unknown words to tagger (grep -v '<unknown>'). 
 # Translate capital letters to small letters (tr '[A-Z]' '[a-z]')
 # Sort the results by unique appearances and starting from the most frequent collocate.
