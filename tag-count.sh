@@ -5,11 +5,15 @@
 # To give rights to use this script tag-count.sh on a text corpus use command chmod u+x tag-count.sh.
 # To tag and lemmatise collcations list of the word "apartheid" in a corpus and create a new file, use command i.e. cat ALL-apartheid-collocations.txt |./tag-count.sh > ALL-tagged-counted.txt (The collocations script is in this Github repository: apartheid-collocations-stop.sh). 
 
-# Tag (cmd) the selected file with word types.
-# Replace all words that the tagger marked as unknown with its original token, e.g. sed 's/africa#NN#<unknown>/africa#NN#Africa/'.
-# Replace all verb types with tag #VB# and all other word types with #NN#. 
-# Delete (tr -d/grep -v) unwanted symbols (�,@,POS,: etc).
-# Delete original token before first # (sed 's/^[a-z]*[^#]*//g') and leave only lemmas for analysis.
+# Tag (cmd) the selected file with parts of speech (pos) tag and its lemma.
+# Replace all words that the tagger marked as unknown with its original token, e.g. sed 's/africa#NN#<unknown>/africa#NN#Africa/'. 
+# Delete (tr -d/grep -v) unwanted symbols (�, @, POS,: etc).
+# Delete original token before first # (sed 's/^[a-z]*[^#]*//g') and leave only tags and lemmas for analysis.
+# Replace different noun types with noun tag NN (sed 's/#N[PN]S#/#NN#/'; sed 's/#NP#/#NN#/'; sed 's/#IN#/#NN#/').
+# Replace adjective pos (JJ) with noun pos (NN) (sed s/#JJ#Palestinian/#NN#Palestinian/'; sed 's/#JJ#/#NN#/').
+# Replace verb variants with verb pos VB. 
+# Delete adverbs (grep -v '#RB#' \).
+
 # Take into analysis only lines with capital letter tags (grep '[A-Z]').
 # Delete unknown words to tagger (grep -v '<unknown>'). 
 # Translate capital letters to small letters (tr '[A-Z]' '[a-z]')
@@ -78,7 +82,7 @@ cmd/tree-tagger-english \
 | sed 's/#NN#call/#VB#call/' \
 | sed 's/#JJ#/#NN#/' \
 | sed 's/#NN#racist/#NN#racism/' \
-| sed 's/#RB#/#NN#/' \
+| grep -v '#RB#' \
 | sed 's/#IN#/#NN#/' \
 | grep -v '<unknown>' \
 | tr '[A-Z]' '[a-z]' \
