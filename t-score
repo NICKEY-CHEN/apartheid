@@ -1,23 +1,41 @@
-# To calculate the t-scores for top collocates with the term "apartheid", I took the first part from collocates script. 
-# This script puts each word on a separate line so I could calculate the number of specific words in each text
+# Maris Sander
+# 02.05.2017
 
-# Script for oige_sonestaja.sh 
+# T-score formula is: t-score = (O-E)/√O, where E=(f1*f2)/N. The sample size/total number of tokens in the texts is N. 
+# Their collocational appearances: O is observed frequency of a word pair and E is their expected frequency.
+# f1 is the marginal appearance of the research word "apartheid" (f1 is operationalized with grep 'apartheid' directory in apartheid-collocates-stop.sh script).
+# f2 is the second component of the word pair (i.e. grep 'israel'). 
+
+# This script puts each word on a separate line so I could calculate the number of specific words in each text.
+
+# Script for wordlist.sh 
+
+# This script puts each word to one line (it coincides with first part of apartheid-collocations-stop.sh script).
+# Delete lines with (grep -v) URL-marking (everything between <.*>).
+# Put one sentence on one line: replace (sed) empty space ( ) marks that follow end marks ([.!?]), which comes after non-capital letters ([^A-Z]) and before capital letters or numbers ([A-Z0-9]) with end of line (\n).
+# Do the same with quotation marks (in the beginning of a sentence) (["]).
+# Leave only lines (grep) that include the word "apartheid".
+# Translate (tr) all capital ([A-Z]) letters to small letters ([a-z]).
+# Replace line endings ($) with symbol # so it is possible to find sentence endings in the analysis of word pairs.
+# Delete (tr -d)  unneccecary punctuation.
+# Replace (tr) empty spaces with line brakes (\n), so in each line there is one word.
+# Delete (grep -v) all empty lines (^$).
 
 grep -v '<.*>' \
 | sed 's/\([^A-Z][.!?]\) \([A-Z0-9]\)/\1\n\2/g' \
 | sed 's/\([.!?]\) \([“]\)/\1\n\2/g' \
 | tr '[A-Z]' '[a-z]' \
 | sed 's/$/#/' \
-| tr -d '\.\,\?\!\:\"\“\”\(\)\;' \
+| tr -d '\.\,\?\!\#\:\"\“\”\(\)\;' \
 | tr ' ' '\n' \
 | grep -v '^$' \
 
-# I first calculated all the words in the text 
+# I first calculated all the words (N) in the text for example: cat ALL.txt |./wordlist.sh | wc -w
+# Result 2 102 764 words
 
-cat ALL.txt |./oige_sonestaja.sh | wc -w
-# Result 2 102 790 words
+# I then calculated the marginal appearances of variations of "apartheid", including its compound words by using the command: cat ALL.txt |./wordlist.sh | grep 'apartheid' | wc -w
+# I looked at the frequency lists of different variations of "apartheid" separately by using the command: cat ALL.txt |./wordlist.sh | grep 'apartheid' | sort | uniq -c | sort -nr 
 
+# To calculate marginal word (f2) appearances for example the word "israel", I used the following command: cat ALL.txt |./wordlist.sh | grep "israel" | wc -w
 
-# To calculate marginal word appearances
-
-cat ALL.txt |./oige_sonestaja.sh | grep "israel" | wc -w
+# I pasted the results to an Excel file and calculated the t-scores for most common collocates. 
