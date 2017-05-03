@@ -1,5 +1,4 @@
-﻿a
-
+a
 about
 above
 abst
@@ -21,7 +20,6 @@ ah
 all
 a
 during
-
 will
 under
 almost
