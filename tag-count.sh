@@ -12,12 +12,12 @@
 # Replace different noun types with noun tag NN (sed 's/#N[PN]S#/#NN#/'; sed 's/#NP#/#NN#/'; sed 's/#IN#/#NN#/').
 # Replace adjective pos (JJ) with noun pos (NN) (sed s/#JJ#Palestinian/#NN#Palestinian/'; sed 's/#JJ#/#NN#/').
 # Replace verb variants with verb pos VB. 
-# Delete adverbs (grep -v '#RB#' \).
+# Replace remained adverbs with noun pos (i.e. because tagger marked "South Africa" as South RB, but in this context it is noun; sed 's/#RB#/#NN#/')
 
 # Take into analysis only lines with capital letter tags (grep '[A-Z]').
 # Delete unknown words to tagger (grep -v '<unknown>'). 
 # Translate capital letters to small letters (tr '[A-Z]' '[a-z]')
-# Sort the results by unique appearances and starting from the most frequent collocate.
+# Sort the results by unique appearances, starting from the most frequent collocate.
 
 cmd/tree-tagger-english \
 | tr '\t' '#' \
