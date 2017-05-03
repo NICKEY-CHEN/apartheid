@@ -66,7 +66,7 @@ paste read.txt read-6.txt >> paarid.txt
 # Delete punctuation (tr-d...) and URL-marking (sed...).
 # Replace (tr) the previous tabs (marked as #) with end of line (\012), so we can get list of all collocates for the word "apartheid" (within distance of 0-5 words between "apartheid" and its collocate), where one word is on one line.
 # Delete (grep -v) empty lines (^$).
-# Delete stopwords (grep -vwf) from list.
+# Delete stopwords (grep -vwf) from list (downloaded from .
 
 cat paarid.txt \
 | grep '[^\t]*apartheid[^\t]*' \
