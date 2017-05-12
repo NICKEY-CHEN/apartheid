@@ -1,9 +1,10 @@
+# tag-count.sh
 # Maris Sander
 # 02.05.2017
 # I used the program TreeTagger to tag and lemmatise the corpora. The TreeTagger is downloadable from http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/.
 # I first downlowded the tagger package, then tagging scripts and installation script (install-tagger.sh) and then parameter files for English language from TreeTagger webpage according to the instructions on their website. 
 # To give rights to use this script tag-count.sh on a text corpus use command chmod u+x tag-count.sh.
-# To tag and lemmatise collcations list of the word "apartheid" in a corpus and create a new file, use command i.e. cat ALL-apartheid-collocations.txt |./tag-count.sh > ALL-tagged-counted.txt (The collocations script is in this Github repository: apartheid-collocations-stop.sh). 
+# To tag and lemmatise collocations list of the word "apartheid" in a corpus and create a new file, use command i.e. cat ALL-apartheid-collocations.txt |./tag-count.sh > ALL-tagged-counted.txt (The collocations script is in this Github repository: apartheid-collocations-stop.sh). 
 
 # Tag (cmd) the selected file with parts of speech (pos) tag and its lemma.
 # Replace all words that the tagger marked as unknown with its original token, e.g. sed 's/africa#NN#<unknown>/africa#NN#Africa/'. 
@@ -36,7 +37,7 @@ cmd/tree-tagger-english \
 | sed 's/palestine#NN#<unknown>/palestine#NN#palestine/' \
 | sed 's/bds#NNS#<unknown>/bds#NN#BDS/' \
 | sed 's/israel-apartheid#NN#<unknown>/israel-apartheid#NN#israel-apartheid/' \
-| sed 's/israelis#NP#<unknown>/israelis#NN#israeli/' \
+| sed 's/israelis#NP#<unknown>/israelis#NN#israel/' \
 | sed 's/apartheid-style#JJ#<unknown>/apartheid-style#NN#apartheid-style/' \
 | sed 's/herzliya�apartheid�#NN#<unknown>/herzliya-apartheid#NN#herzliya-apartheid/' \
 | sed 's/haifa�apartheid�#NN#<unknown>/haifa-apartheid#NN#haifa-apartheid/' \
@@ -88,3 +89,4 @@ cmd/tree-tagger-english \
 | tr '[A-Z]' '[a-z]' \
 | grep -v '\:' \
 | sort | uniq -c | sort -nr
+
